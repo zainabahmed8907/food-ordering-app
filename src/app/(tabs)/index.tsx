@@ -1,16 +1,21 @@
-import {  ScrollView } from "react-native";
+import { ScrollView, FlatList, SafeAreaView } from "react-native";
 
 import products from "@/assets/data/products";
 import ProductListItem from "@/src/components/ProductListItem";
 
 export default function MenuScreen() {
-
   return (
-    <ScrollView>
-     <ProductListItem product={products[0]}/>
-     <ProductListItem product={products[3]}/>
-
-    </ScrollView>
+    <SafeAreaView>
+      <ScrollView>
+        <FlatList
+          data={products}
+          renderItem={({ item }) => <ProductListItem product={item} />}
+          numColumns={2}
+          scrollEnabled
+          contentContainerStyle={{ gap: 10, padding: 20 }}
+          columnWrapperStyle={{ gap: 10 }}
+        />
+      </ScrollView>
+    </SafeAreaView>
   );
 }
-
