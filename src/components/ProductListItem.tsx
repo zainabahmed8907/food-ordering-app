@@ -8,7 +8,7 @@ export type ProductListProps = {
   product: Product;
 };
 
-const defaultProductImage =
+export const defaultProductImage =
   "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/peperoni.png";
 
 export default function ProductListItem({ product }: ProductListProps) {

@@ -6,7 +6,6 @@ import ProductListItem from "@/src/components/ProductListItem";
 export default function MenuScreen() {
   return (
     <SafeAreaView>
-      <ScrollView>
         <FlatList
           data={products}
           renderItem={({ item }) => <ProductListItem product={item} />}
@@ -15,7 +14,6 @@ export default function MenuScreen() {
           contentContainerStyle={{ gap: 10, padding: 20 }}
           columnWrapperStyle={{ gap: 10 }}
         />
-      </ScrollView>
     </SafeAreaView>
   );
 }
