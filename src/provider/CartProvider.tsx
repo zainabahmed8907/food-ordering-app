@@ -1,6 +1,6 @@
 import { PropsWithChildren, createContext, useContext, useState } from "react";
 import { CartItem, Product } from "../types";
-
+import { randomUUID } from "expo-crypto";
 const CardProviderContext = createContext<CartType>({
   items: [],
   addItem: () => {},
@@ -15,18 +15,6 @@ type CartType = {
 export const CardProvider = ({ children }: PropsWithChildren) => {
   const [items, setItems] = useState<CartItem[]>([]);
 
-  const addItem = (product: Product, size: CartItem["size"]) => {
-    //if already exists, then increment
-    const newItem: CartItem = {
-      product,
-      size,
-      quantity: 1,
-      product_id: product.id,
-      id: "1",
-    };
-    setItems((prev) => [...prev, newItem]);
-  };
-
   // updateQuantity
   const updateQuantity = (itemId: string, amount: -1 | 1) => {
     setItems(
@@ -38,6 +26,24 @@ export const CardProvider = ({ children }: PropsWithChildren) => {
         )
         .filter((item) => item.quantity > 0)
     );
+  };
+  const addItem = (product: Product, size: CartItem["size"]) => {
+    const existingItem = items.find(
+      (item: CartItem) => item.product == product && item.size == size
+    );
+    if (existingItem) {
+      updateQuantity(existingItem.id, 1);
+      return;
+    }
+    //if already exists, then increment
+    const newItem: CartItem = {
+      product,
+      size,
+      quantity: 1,
+      product_id: product.id,
+      id: randomUUID(),
+    };
+    setItems((prev) => [...prev, newItem]);
   };
 
   return (
