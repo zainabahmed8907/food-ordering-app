@@ -43,6 +43,8 @@ const CartListItem = ({ cartItem }: CartListItemProps) => {
           style={{ padding: 5 }}
         />
       </View>
+
+     
     </View>
   );
 };
