@@ -37,35 +37,7 @@ const ProductDetailsScreen = () => {
         resizeMode="contain"
       />
 
-      <Text style={styles.subtitle}>Select Size</Text>
-
-      <View style={styles.sizes}>
-        {sizes.map((size) => (
-          <Pressable
-            style={[
-              styles.size,
-              {
-                backgroundColor: selectedSize == size ? "gainsboro" : "white",
-              },
-            ]}
-            onPress={() => setSelectedSize(size)}
-          >
-            <Text
-              key={size}
-              style={[
-                styles.sizeText,
-                { color: selectedSize == size ? "black" : "gray" },
-              ]}
-            >
-              {size}
-            </Text>
-          </Pressable>
-        ))}
-      </View>
-
-      <Text style={styles.price}>Price: ${product?.price.toFixed(2)}</Text>
-
-      <Button text="Add to cart" onPress={addToCart}></Button>
+    
     </View>
   );
 };
