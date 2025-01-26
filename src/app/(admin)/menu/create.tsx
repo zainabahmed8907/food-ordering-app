@@ -1,7 +1,7 @@
 import { Image, StyleSheet, Text, TextInput, View } from "react-native";
 import React, { useState } from "react";
 import Button from "@/src/components/Button";
-import { Stack, useRouter } from "expo-router";
+import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import { defaultProductImage } from "@/src/components/ProductListItem";
 import Colors from "@/src/constants/Colors";
 import * as ImagePicker from "expo-image-picker";
@@ -58,9 +58,17 @@ const CreateProduct = () => {
     }
   };
 
+  const { id } = useLocalSearchParams();
+
+  const isUpdating = !!id;
+
+  console.log(!id);
+
   return (
     <View style={styles.container}>
-        <Stack.Screen options={{title:"Create Product"}}/>
+      <Stack.Screen
+        options={{ title: isUpdating ? "Update Product" : "Create Product" }}
+      />
       <Image
         source={{ uri: image || defaultProductImage }}
         style={styles.image}
@@ -82,7 +90,7 @@ const CreateProduct = () => {
 
       <Text style={styles.error}>{errors}</Text>
 
-      <Button text="Create" onPress={onCreate} />
+      <Button text={`${isUpdating}` ? "Update" : "Create"} onPress={onCreate} />
     </View>
   );
 };

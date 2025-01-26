@@ -1,21 +1,22 @@
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
-import { Stack, useLocalSearchParams, useRouter } from "expo-router";
+import { Link, Stack, useLocalSearchParams, useRouter } from "expo-router";
 import products from "@/assets/data/products";
 import { defaultProductImage } from "@/src/components/ProductListItem";
 import Button from "@/src/components/Button";
 import { useCart } from "@/src/provider/CartProvider";
 import { PizzaSize } from "@/src/types";
+import { FontAwesome } from "@expo/vector-icons";
+import Colors from "@/src/constants/Colors";
 
-const sizes:PizzaSize[] = ["S", "M", "L", "XL"];
+const sizes: PizzaSize[] = ["S", "M", "L", "XL"];
 
 const ProductDetailsScreen = () => {
   const { id } = useLocalSearchParams();
   const [selectedSize, setSelectedSize] = useState<PizzaSize>("M");
   const { addItem } = useCart();
   const product = products.find((p: any) => p?.id == id);
- const router=useRouter();
-
+  const router = useRouter();
 
   const addToCart = () => {
     if (!product) {
@@ -24,11 +25,29 @@ const ProductDetailsScreen = () => {
 
     addItem(product, selectedSize);
     router.push("/cart");
-    
   };
 
   return (
     <View style={styles.container}>
+      <Stack.Screen
+        options={{
+          title: "details",
+          headerRight: () => (
+            <Link href={`/(admin)/menu/create?id=${id}`} asChild>
+              <Pressable>
+                {({ pressed }) => (
+                  <FontAwesome
+                    name="pencil"
+                    size={25}
+                    color={Colors.light.tint}
+                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
+                  />
+                )}
+              </Pressable>
+            </Link>
+          ),
+        }}
+      />
       <Stack.Screen options={{ title: product?.name }} />
 
       <Image
@@ -36,8 +55,6 @@ const ProductDetailsScreen = () => {
         style={styles.image}
         resizeMode="contain"
       />
-
-    
     </View>
   );
 };
